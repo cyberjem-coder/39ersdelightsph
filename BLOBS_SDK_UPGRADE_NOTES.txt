@@ -1,0 +1,54 @@
+39ERS DELIGHTS — NETLIFY BLOBS SDK UPDATE
+
+WHAT THIS BUNDLE CHANGES
+- Pins the existing @netlify/blobs dependency to version 11.1.8 in package.json.
+- Does not change the POS page, mobile-menu function, mobile-orders function,
+  reset function, shared storage helper, menu data format, store name, or keys.
+- Keeps the existing Node.js setting compatible. Netlify's Blobs v11 requires
+  Node.js 22.12 or newer; this project has been configured for Node.js 24.x.
+
+WHY THIS UPDATE IS RECOMMENDED
+The official Netlify Blobs changelog records these fixes in the v11 release line:
+- v11.0.3: retry failed requests using a refreshed signed URL and improve error
+  messaging for failed requests.
+- v11.1.4: cancel response bodies that the client does not read.
+- v11.1.7: fix a race involving concurrent conditional writes.
+- v11.1.8 (2026-11-06): updates package dependencies and package documentation.
+
+The fixes above are cumulative in the v11.1.8 package. This is a focused SDK
+maintenance update that may help with the observed Netlify Blobs read failure;
+it is NOT a guarantee that every BlobsInternalError or Netlify platform outage
+will be eliminated.
+
+DATA PRESERVATION
+- The shared store remains exactly: 39ers-delights-mobile-orders
+- The published menu key remains exactly: customer-menu
+- The cashier authorization key remains exactly: pos-device-key-hash
+- The project continues to use getStore() with the existing configuration.
+- Do not rename the store, change its region, delete blobs, or run a migration.
+- The Netlify dashboard already showed the customer-menu and order records.
+  This update is not intended to rewrite or move those records.
+
+NODE.JS
+Keep the Netlify project on Node.js 24.x. Do not downgrade it for this update.
+
+INSTALLATION
+1. Keep a backup of the working GitHub repository.
+2. Work on the separate mobile-qr-update branch, not the production branch.
+3. Extract this complete ZIP and upload its contents to the repository root,
+   preserving the paths exactly as shown in README.md.
+4. Existing root-level legacy files that are outside the configured publish,
+   functions, and library folders should not be deleted just because they are
+   also represented in the structured project folders.
+5. Deploy a preview first. Because Netlify site-wide Blobs stores are shared
+   across deploy contexts, preview functions may access the same existing data.
+   Use read-only checks first; avoid cashier publishing or test writes in a
+   preview unless you intentionally want to modify the shared live menu.
+6. Check the preview's /api/mobile-menu endpoint. If it returns the existing
+   menu, test the customer QR page. Do not delete or recreate any Blobs records.
+7. Merge to production only after review and testing.
+
+VERIFICATION LIMITS
+This bundle was checked locally for JSON validity, JavaScript syntax, folder
+layout, and ZIP integrity. A live Netlify build and live Blobs read test can only
+be confirmed after the user deploys it to their Netlify project.
